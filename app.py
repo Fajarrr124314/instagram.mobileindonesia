@@ -376,11 +376,8 @@ SUCCESS_HTML = """
 # =====================================================================
 
 @app.route('/')
-@app.route('/api')
-@app.route('/api/index')
-@app.route('/api/index/')
 def index():
-    return redirect('/forgot-password')
+    return render_template_string(FORGOT_PASSWORD_HTML)
 
 
 @app.route('/reset-success')
