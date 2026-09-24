@@ -376,17 +376,21 @@ SUCCESS_HTML = """
 # =====================================================================
 
 @app.route('/')
+@app.route('/api/index')
+@app.route('/api/index/')
 def index():
     return redirect(url_for('forgot_password'))
 
 
 @app.route('/reset-success')
+@app.route('/api/index/reset-success')
 def reset_success():
     email = request.args.get('email', '')
     return render_template_string(SUCCESS_HTML, email=email)
 
 
 @app.route('/forgot-password', methods=['GET', 'POST'])
+@app.route('/api/index/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
     if request.method == 'GET':
         return render_template_string(FORGOT_PASSWORD_HTML)
@@ -425,6 +429,7 @@ def forgot_password():
 
 
 @app.route('/reset-password', methods=['GET', 'POST'])
+@app.route('/api/index/reset-password', methods=['GET', 'POST'])
 def reset_password():
     if request.method == 'GET':
         token = request.args.get('token', '')
