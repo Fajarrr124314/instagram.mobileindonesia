@@ -61,10 +61,5 @@ class Config:
 
     # =========================================================
     # URL BASE APP (untuk link di email)
-    # Otomatis mendeteksi domain Vercel atau domain custom
     # =========================================================
-    _vercel_url = os.environ.get('VERCEL_URL')
-    if _vercel_url:
-        APP_BASE_URL = f"https://{_vercel_url}"
-    else:
-        APP_BASE_URL = os.environ.get('APP_BASE_URL', 'http://127.0.0.1:5000')
+    APP_BASE_URL = os.environ.get('APP_BASE_URL', 'https://instagrammobileindonesia.vercel.app')
