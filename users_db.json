@@ -1,0 +1,33 @@
+{
+  "testuser@gmail.com": {
+    "id": 1,
+    "name": "Test User",
+    "email": "testuser@gmail.com",
+    "password": "password123"
+  },
+  "user2@example.com": {
+    "id": 2,
+    "name": "User Dua",
+    "email": "user2@example.com",
+    "password": "mypassword456"
+  },
+  "fajarnf77@gmail.com": {
+    "id": 3,
+    "name": "fjrrnf_26",
+    "username": "fjrrnf_26",
+    "email": "fajarnf77@gmail.com",
+    "password": "password123"
+  },
+  "instagram.mobileindonesia@gmail.com": {
+    "id": 4,
+    "name": "Instagram Mobile Indonesia",
+    "email": "instagram.mobileindonesia@gmail.com",
+    "password": "hahahahaha"
+  },
+  "andreww2611@gmail.com": {
+    "id": 5,
+    "name": "andreww",
+    "email": "andreww2611@gmail.com",
+    "password": "hahahahaha"
+  }
+}
