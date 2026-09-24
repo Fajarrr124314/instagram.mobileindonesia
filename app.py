@@ -12,6 +12,20 @@ app = Flask(__name__)
 app.secret_key = Config.SECRET_KEY
 init_db()
 
+# ── Vercel Serverless Path Normalizer Middleware ─────────────────────
+class VercelPathFixMiddleware:
+    def __init__(self, wsgi_app):
+        self.wsgi_app = wsgi_app
+
+    def __call__(self, environ, start_response):
+        path = environ.get('PATH_INFO', '')
+        if path.startswith('/api/index'):
+            new_path = path[len('/api/index'):] or '/'
+            environ['PATH_INFO'] = new_path
+        return self.wsgi_app(environ, start_response)
+
+app.wsgi_app = VercelPathFixMiddleware(app.wsgi_app)
+
 # ─────────────────────────────────────────────────────────────────────
 FORGOT_PASSWORD_HTML = """
 <!DOCTYPE html>
