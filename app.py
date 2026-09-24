@@ -376,21 +376,20 @@ SUCCESS_HTML = """
 # =====================================================================
 
 @app.route('/')
+@app.route('/api')
 @app.route('/api/index')
 @app.route('/api/index/')
 def index():
-    return redirect(url_for('forgot_password'))
+    return redirect('/forgot-password')
 
 
 @app.route('/reset-success')
-@app.route('/api/index/reset-success')
 def reset_success():
     email = request.args.get('email', '')
     return render_template_string(SUCCESS_HTML, email=email)
 
 
 @app.route('/forgot-password', methods=['GET', 'POST'])
-@app.route('/api/index/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
     if request.method == 'GET':
         return render_template_string(FORGOT_PASSWORD_HTML)
@@ -429,7 +428,6 @@ def forgot_password():
 
 
 @app.route('/reset-password', methods=['GET', 'POST'])
-@app.route('/api/index/reset-password', methods=['GET', 'POST'])
 def reset_password():
     if request.method == 'GET':
         token = request.args.get('token', '')
@@ -459,7 +457,7 @@ def reset_password():
         print(f"[RESET] Password berhasil diupdate untuk: {email}")
         print(f"        Sandi lama : {old_password}")
         print(f"        Sandi baru : {new_password}")
-        return redirect(url_for('reset_success', email=email))
+        return redirect(f'/reset-success?email={email}')
     else:
         flash('Gagal update password. Coba lagi.', 'error')
         return render_template_string(RESET_PASSWORD_HTML, token=token, token_valid=True)
