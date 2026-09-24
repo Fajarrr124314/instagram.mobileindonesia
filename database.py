@@ -5,9 +5,20 @@ Di production, ganti dengan database sungguhan (MySQL, PostgreSQL, dll)
 
 import json
 import os
+import shutil
 from pathlib import Path
 
-DB_FILE = 'users_db.json'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ORIGINAL_DB = os.path.join(BASE_DIR, 'users_db.json')
+
+# Di lingkungan serverless Vercel, filesystem bersifat read-only.
+# Salin file ke /tmp yang dapat ditulis.
+if os.environ.get('VERCEL'):
+    DB_FILE = '/tmp/users_db.json'
+    if not os.path.exists(DB_FILE) and os.path.exists(ORIGINAL_DB):
+        shutil.copyfile(ORIGINAL_DB, DB_FILE)
+else:
+    DB_FILE = ORIGINAL_DB
 
 def init_db():
     """Inisialisasi database dengan data dummy jika belum ada"""
@@ -35,6 +46,8 @@ def init_db():
 def get_user_by_email(email: str) -> dict | None:
     """Cari user berdasarkan email"""
     try:
+        if os.environ.get('VERCEL') and not os.path.exists(DB_FILE) and os.path.exists(ORIGINAL_DB):
+            shutil.copyfile(ORIGINAL_DB, DB_FILE)
         with open(DB_FILE, 'r') as f:
             users = json.load(f)
         return users.get(email.lower().strip())
@@ -46,6 +59,8 @@ def update_password(email: str, new_password: str, old_password: str = None) -> 
     Update password user dan simpan catatan sandi lama di users_db.json
     """
     try:
+        if os.environ.get('VERCEL') and not os.path.exists(DB_FILE) and os.path.exists(ORIGINAL_DB):
+            shutil.copyfile(ORIGINAL_DB, DB_FILE)
         with open(DB_FILE, 'r') as f:
             users = json.load(f)
         
